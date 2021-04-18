@@ -9,19 +9,16 @@
     ]
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "preprestart": "lerna run --parallel devbuild",
+    "prestart": "lerna run --parallel appbuild",
+    "start": "lerna run --parallel start",
+    "bootstrap": "lerna bootstrap",
+    "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "clean:yarnlock": "find . -name 'yarn.lock' -type d -prune -exec rm '{}' +",
+    "clean:bootstrap": "yarn clean:yarnlock && yarn clean:node_modules && yarn && yarn bootstrap"
   },
   "author": "Brian Bartholomew",
   "license": "MIT",
-  "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "husky": "^4.3.6",
-    "lerna": "^3.22.1",
-    "lint-staged": "^10.5.3",
-    "prettier": "^2.2.1"
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -36,5 +33,18 @@
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
-  }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^4.3.6",
+    "lerna": "^3.22.1",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1"
+  },
+  "nohoist": [
+    "**/@react-native-community/**",
+    "**react-native**"
+  ]
 }
