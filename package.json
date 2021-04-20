@@ -6,12 +6,17 @@
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/@react-native-community/**",
+      "**react-native**"
     ]
   },
   "scripts": {
     "preprestart": "lerna run --parallel devbuild",
     "prestart": "lerna run --parallel appbuild",
     "start": "lerna run --parallel start",
+    "start:native": "lerna run --parallel start:native",
     "bootstrap": "lerna bootstrap",
     "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "clean:yarnlock": "find . -name 'yarn.lock' -type d -prune -exec rm '{}' +",
@@ -42,9 +47,5 @@
     "lerna": "^3.22.1",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1"
-  },
-  "nohoist": [
-    "**/@react-native-community/**",
-    "**react-native**"
-  ]
+  }
 }

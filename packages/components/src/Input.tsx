@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import styledWeb from "styled-components";
 import styledNat from "styled-components/native";
+import {Platform} from "react-native";
 import styled from "./styled";
 import { THEME } from "./Theme";
-const Platform = Platform || {};
 
 function getInputBorderColor({
   color,
   theme,
   variant,
-}) {
+}: {
+        color?: any;
+        theme?: any;
+        variant?: any;
+      }) {
   if (
     Input.VARIANTS.CONTAINED ===
       variant ||
@@ -39,7 +43,11 @@ function getInputBackgroundColor({
   color,
   theme,
   variant,
-}) {
+}: {
+        color?: any;
+        theme?: any;
+        variant?: any;
+      }) {
   return `${
     theme[
       THEME.COLORS[theme.mode].BACKGROUND
@@ -51,7 +59,11 @@ function getInputTextColor({
   color,
   theme,
   variant,
-}) {
+}: {
+        color?: any;
+        theme?: any;
+        variant?: any;
+      }) {
   return `${
     theme[
       THEME.COLORS[theme.mode].TEXT_DARK
@@ -60,6 +72,7 @@ function getInputTextColor({
 }
 
 let Component;
+  function onChangeNOOP(event) {}
 if (
   Platform &&
   (Platform.OS === "ios" ||
@@ -67,7 +80,6 @@ if (
 ) {
   Component = styledNat.TextInput``;
   const ComponentShell = styledNat.TextInput``;
-  function onChangeNOOP() {}
   Component = ({
     onChange = onChangeNOOP,
     color,
@@ -90,7 +102,11 @@ if (
   &:focus {
     outline: none;
     border: 2px solid
-    ${({ color, theme, variant }) => {
+    ${({ color, theme, variant }: {
+        color?: any;
+        theme?: any;
+        variant?: any;
+      }) => {
       return getInputBorderColor({
         color,
         theme,
@@ -105,21 +121,33 @@ const Comp = styled(Component)`
   border-radius: 4px;
   padding: 8px 12px;
   border: 2px solid
-    ${({ color, theme, variant }) => {
+    ${({ color, theme, variant }: {
+        color?: any;
+        theme?: any;
+        variant?: any;
+      }) => {
       return getInputBorderColor({
         color,
         theme,
         variant,
       });
     }};
-  background: ${({ color, theme, variant }) => {
+  background: ${({ color, theme, variant }: {
+        color?: any;
+        theme?: any;
+        variant?: any;
+      }) => {
     return getInputBackgroundColor({
       color,
       theme,
       variant,
     });
   }};
-  color: ${({ color, theme, variant }) => {
+  color: ${({ color, theme, variant }: {
+        color?: any;
+        theme?: any;
+        variant?: any;
+      }) => {
     return getInputTextColor({
       color,
       theme,
@@ -130,10 +158,10 @@ const Comp = styled(Component)`
 `;
 
 export default function Input({
-  color,
-  variant,
-  onFocus: onFocusProp = ()=>{},
-  onBlur: onBlurProp = ()=>{},
+  color=THEME.COLORS.PRIMARY,
+  variant= Input.VARIANTS.CONTAINED,
+  onFocus: onFocusProp = (event)=>{},
+  onBlur: onBlurProp = (event)=>{},
   ...props
 }) {
   const [

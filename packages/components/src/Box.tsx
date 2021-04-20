@@ -1,10 +1,8 @@
-import React from "react";
 import PropTypes from "prop-types";
 import styledWeb from "styled-components";
 import styledNat from "styled-components/native";
 import styled from "./styled";
-
-const Platform = Platform || {};
+import {Platform} from "react-native";
 
 let Component;
 if (
@@ -34,7 +32,7 @@ const Comp = styled(Component)`
     alignContent};
 `;
 
-export default function Box(props) {
+export default function Box(props: any) {
   return <Comp {...props} />;
 }
 
@@ -96,6 +94,7 @@ Box.propTypes = {
     "safe",
     "unsafe",
   ]),
+  children: PropTypes.node,
 };
 
 Box.defaultProps = {

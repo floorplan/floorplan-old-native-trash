@@ -43,7 +43,7 @@ const Card = styled(BoxChild)`
     ]};
 `;
 
-const ThemeToggle = (props) => {
+const ThemeToggle = (props: any) => {
   const { mode, setMode } = useContext(
     ThemeContext
   );
@@ -116,8 +116,8 @@ export default function App() {
             </Typography>
             <Input
               value={value}
-              onChange={({ target }) =>
-                setValue(target.value)
+              onChange={(event:any) =>
+                setValue(event.target.value)
               }
             />
             <Input

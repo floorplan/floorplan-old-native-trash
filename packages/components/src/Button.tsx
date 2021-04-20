@@ -1,134 +1,86 @@
-import React, {
-  useContext,
-  useCallback,
-} from "react";
+import React, { useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import styledWeb from "styled-components";
 import styledNat from "styled-components/native";
+import { Platform } from "react-native";
 import styled from "./styled";
 import Typography from "./Typography";
-import {
-  THEME,
-  ThemeContext,
-} from "./Theme";
+import { THEME, ThemeContext } from "./Theme";
 
 function getButtonHover({
   color,
   theme,
   variant,
+}: {
+  color?: any;
+  theme?: any;
+  variant?: any;
 }) {
-  if (
-    Button.VARIANTS.CONTAINED ===
-    variant
-  ) {
-    return `${
-      theme[
-        THEME.COLORS[theme.mode][color]
-      ]
-    }99`;
+  if (Button.VARIANTS.CONTAINED === variant) {
+    return `${theme[THEME.COLORS[theme.mode][color]]}99`;
   }
-  if (
-    Button.VARIANTS.OUTLINE ===
-      variant ||
-    Button.VARIANTS.TEXT === variant
-  ) {
-    return `${
-      theme[
-        THEME.COLORS[theme.mode][color]
-      ]
-    }1a`;
+  if (Button.VARIANTS.OUTLINE === variant || Button.VARIANTS.TEXT === variant) {
+    return `${theme[THEME.COLORS[theme.mode][color]]}1a`;
   }
+  return "";
 }
 
 function getButtonBorderColor({
   color,
   theme,
   variant,
+}: {
+  color?: any;
+  theme?: any;
+  variant?: any;
 }) {
   if (
-    Button.VARIANTS.CONTAINED ===
-      variant ||
+    Button.VARIANTS.CONTAINED === variant ||
     Button.VARIANTS.OUTLINE === variant
   ) {
-    return `${
-      theme[
-        THEME.COLORS[theme.mode][color]
-      ]
-    }`;
+    return `${theme[THEME.COLORS[theme.mode][color]]}`;
   }
-  if (
-    Button.VARIANTS.TEXT === variant
-  ) {
-    return `${
-      theme[
-        THEME.COLORS[theme.mode][color]
-      ]
-    }00`;
+  if (Button.VARIANTS.TEXT === variant) {
+    return `${theme[THEME.COLORS[theme.mode][color]]}00`;
   }
+  return "";
 }
 
 function getButtonBackgroundColor({
   color,
   theme,
   variant,
+}: {
+  color?: any;
+  theme?: any;
+  variant?: any;
 }) {
-  if (
-    Button.VARIANTS.CONTAINED ===
-    variant
-  ) {
-    return `${
-      theme[
-        THEME.COLORS[theme.mode][color]
-      ]
-    }`;
+  if (Button.VARIANTS.CONTAINED === variant) {
+    return `${theme[THEME.COLORS[theme.mode][color]]}`;
   }
-  if (
-    Button.VARIANTS.OUTLINE ===
-      variant ||
-    Button.VARIANTS.TEXT === variant
-  ) {
-    return `${
-      theme[
-        THEME.COLORS[theme.mode][color]
-      ]
-    }00`;
+  if (Button.VARIANTS.OUTLINE === variant || Button.VARIANTS.TEXT === variant) {
+    return `${theme[THEME.COLORS[theme.mode][color]]}00`;
   }
+  return "";
 }
 
-const Platform = Platform || {};
-
 let Component;
-if (
-  Platform &&
-  (Platform.OS === "ios" ||
-    Platform.OS === "android")
-) {
+if (Platform && (Platform.OS === "ios" || Platform.OS === "android")) {
   const ComponentShell = styledNat.TouchableHighlight``;
-  Component = ({
-    onClick,
-    ...props
-  }) => {
-    const theme = useContext(
-      ThemeContext
-    );
-    const getUnderLayColor = useCallback(
-      function (color, variant) {
-        return getButtonHover({
-          color,
-          theme,
-          variant,
-        });
-      },
-      []
-    );
+  Component = ({ onClick, ...props }) => {
+    const theme = useContext(ThemeContext);
+    const getUnderLayColor = useCallback(function (color, variant) {
+      return getButtonHover({
+        color,
+        theme,
+        variant,
+      });
+    }, []);
     return (
       <ComponentShell
         onPress={onClick}
         activeOpacity={1}
-        underlayColor={getUnderLayColor(
-          props.color,
-          props.variant
-        )}
+        underlayColor={getUnderLayColor(props.color, props.variant)}
         {...props}
       />
     );
@@ -141,6 +93,10 @@ if (
         theme,
         color,
         variant,
+      }: {
+        color?: any;
+        theme?: any;
+        variant?: any;
       }) => {
         return getButtonHover({
           color,
@@ -162,11 +118,7 @@ const Comp = styled(Component)`
         variant,
       });
     }};
-  background-color: ${({
-    color,
-    theme,
-    variant,
-  }) => {
+  background-color: ${({ color, theme, variant }) => {
     return getButtonBackgroundColor({
       color,
       theme,
@@ -174,44 +126,19 @@ const Comp = styled(Component)`
     });
   }};
 `;
-function getTypographyColor(
-  variant,
-  color
-) {
-  if (
-    Button.VARIANTS.CONTAINED ===
-    variant
-  ) {
+function getTypographyColor(variant, color) {
+  if (Button.VARIANTS.CONTAINED === variant) {
     return THEME.COLORS.TEXT_LIGHT;
   }
-  if (
-    Button.VARIANTS.OUTLINE ===
-      variant ||
-    Button.VARIANTS.TEXT === variant
-  ) {
+  if (Button.VARIANTS.OUTLINE === variant || Button.VARIANTS.TEXT === variant) {
     return color;
   }
 }
 
-export default function Button({
-  children,
-  color,
-  variant,
-  ...props
-}) {
+export default function Button({ children, color, variant, ...props }) {
   return (
-    <Comp
-      color={color}
-      title={children}
-      variant={variant}
-      {...props}
-    >
-      <Typography
-        color={getTypographyColor(
-          variant,
-          color
-        )}
-      >
+    <Comp color={color} title={children} variant={variant} {...props}>
+      <Typography color={getTypographyColor(variant, color)}>
         {`${children}`.toUpperCase()}
       </Typography>
     </Comp>

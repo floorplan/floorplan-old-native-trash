@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import styledWeb from "styled-components";
 import styledNat from "styled-components/native";
+import {Platform} from "react-native";
 
 import styled from './styled';
 import { THEME } from "./Theme";
 // let styledNat, styledWeb;
-let Platform = Platform || {};
 
 let Component;
 if (
@@ -25,7 +25,7 @@ const Comp = styled(Component)`
   `;
 
 export default function Typography(
-  props
+  props:{color:string, children:any}
 ) {
   return <Comp {...props} />;
 }
